@@ -35,3 +35,8 @@ To get started with the Weather Forecast API, follow these simple steps:
 ## Response Format
 
 All API responses are in JSON format, providing a clear and structured representation of weather data.
+
+
+Screenshot:
+![WhatsApp Image 2023-11-28 at 10 36 11_4ae92798](https://github.com/Greeshma47/weatherbngl/assets/150279002/698d5dbc-a571-4227-bdcc-764765550e8f)
+
