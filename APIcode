@@ -1,0 +1,40 @@
+from flask import Flask, request, jsonify
+import requests
+
+app = Flask(_name_)
+
+# Replace 'YOUR_OPENWEATHERMAP_API_KEY' with your actual OpenWeatherMap API key
+OPENWEATHERMAP_API_KEY = 'e2ce30c0c2db64fedf81112bca86efdb'
+OPENWEATHERMAP_API_URL = 'http://api.openweathermap.org/data/2.5/weather'
+
+def get_weather_data(city):
+    params = {
+        'q': city,
+        'appid': OPENWEATHERMAP_API_KEY,
+        'units': 'metric'  # You can change this to 'imperial' for Fahrenheit
+    }
+
+    response = requests.get(OPENWEATHERMAP_API_URL, params=params)
+    return response.json() if response.status_code == 200 else None
+
+@app.route('/weather', methods=['GET'])
+def get_weather():
+    city = request.args.get('city')
+
+    if not city:
+        return jsonify({'error': 'City parameter is missing'}), 400
+
+    weather_data = get_weather_data(city)
+
+    if weather_data:
+        weather = {
+            'city': weather_data['name'],
+            'temperature': weather_data['main']['temp'],
+            'description': weather_data['weather'][0]['description'],
+        }
+        return jsonify(weather)
+    else:
+        return jsonify({'error': 'Failed to fetch weather data'}), 500
+
+if _name_ == '_main_':
+    app.run(debug=True)
